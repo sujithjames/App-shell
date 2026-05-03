@@ -35,7 +35,7 @@ export default function Canvas({
         <div className={`bg-white rounded-xl ${CANVAS_SHADOW} flex flex-col flex-1 overflow-hidden`}>
 
           {/* Back toolbar */}
-          <div className="border-b border-[#EAECF0] px-5 py-2.5 flex items-center gap-3 shrink-0">
+          <div className="border-b border-[#EAECF0] px-8 py-2.5 flex items-center gap-3 shrink-0">
             <button
               onClick={onBack}
               className="flex items-center gap-1.5 text-[13px] text-[#667085] hover:text-[#101828] transition-colors shrink-0"
@@ -58,7 +58,7 @@ export default function Canvas({
           </div>
 
           {/* Scrollable body */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto px-8 py-6">
             {children}
           </div>
         </div>
@@ -67,8 +67,8 @@ export default function Canvas({
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-[#F9FAFB] p-4">
-      <div className={`bg-white rounded-xl ${CANVAS_SHADOW} px-8 py-6`}>
+    <div className="flex-1 overflow-auto bg-[#F9FAFB] p-4 flex flex-col">
+      <div className={`bg-white rounded-xl ${CANVAS_SHADOW} px-8 py-6 flex-1`}>
         {children}
       </div>
     </div>
