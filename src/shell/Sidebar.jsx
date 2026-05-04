@@ -24,11 +24,11 @@ function NavItemMainNav({ icon: Icon, label, active }) {
 
 function NavItemSettings({ icon: Icon, label, active }) {
   return (
-    <div className={`flex gap-2 items-center px-2 py-[7px] rounded-lg w-full cursor-pointer ${
+    <div className={`flex gap-2 items-center px-2 py-2 rounded-lg w-full cursor-pointer ${
       active ? 'bg-[#1D2939]' : 'hover:bg-[#1D2939]/50'
     }`}>
-      <Icon size={18} strokeWidth={1.8} className={active ? 'text-white' : 'text-[#98A2B3]'} />
-      <span className={`text-[14px] font-medium leading-5 ${active ? 'text-white' : 'text-[#D0D5DD]'}`}>
+      <Icon size={20} strokeWidth={1.8} className={active ? 'text-white' : 'text-[#98A2B3]'} />
+      <span className={`text-[16px] font-medium leading-5 ${active ? 'text-white' : 'text-[#D0D5DD]'}`}>
         {label}
       </span>
     </div>
@@ -100,10 +100,10 @@ export default function Sidebar({
           )}
 
           {/* Nav items */}
-          <div className="flex flex-col gap-5 flex-1 overflow-y-auto mt-1">
+          <div className="flex flex-col gap-1 flex-1 overflow-y-auto">
             {isSettings ? (
               sections.map((section, i) => (
-                <div key={i} className="flex flex-col gap-0.5">
+                <div key={i} className="flex flex-col gap-1">
                   <div className="px-2 pb-1">
                     <span className="text-[11px] font-semibold uppercase tracking-wider text-[#667085]">
                       {section.label}
@@ -116,8 +116,8 @@ export default function Sidebar({
               ))
             ) : (
               navSections.map((section, i) => (
-                <div key={i} className="flex flex-col gap-0.5">
-                  {i > 0 && <div className="h-px bg-[#1D2939] my-1" />}
+                <div key={i} className="flex flex-col gap-1">
+                  {i > 0 && <div className="h-px bg-[#EAECF0] my-2" />}
                   {section.items.map(item => (
                     <NavItemMainNav key={item.label} {...item} />
                   ))}
@@ -129,7 +129,7 @@ export default function Sidebar({
 
         {/* Bottom: Settings */}
         <div className="flex flex-col gap-2 mt-2">
-          <div className="h-px bg-[#1D2939]" />
+          <div className="h-px bg-[#EAECF0]" />
           <NavItem icon={Settings} label="Settings" />
         </div>
       </div>

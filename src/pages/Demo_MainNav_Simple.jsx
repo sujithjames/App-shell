@@ -24,6 +24,7 @@ const NAV_SECTIONS = [
       { icon: RefreshCw, label: 'Automation' },
       { icon: Globe, label: 'Sites' },
       { icon: Star, label: 'Reputation' },
+      { icon: TrendingUp, label: 'Reporting' },
       { icon: Grid3x3, label: 'App marketplace' },
       { icon: Tablet, label: 'Mobile app' },
     ],
