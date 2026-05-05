@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import {
-  BarChart3, TrendingUp, MessageSquare, Share2,
-  Settings, FileText, Bell, Users,
+  ArrowUpCircle, LayoutDashboard, MessageCircle, Calendar,
+  User, CreditCard, Send, RefreshCw, Globe, Star,
+  TrendingUp, Grid3x3, Tablet,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
@@ -9,28 +10,34 @@ import Canvas from '../shell/Canvas'
 const NAV_SECTIONS = [
   {
     items: [
-      { icon: BarChart3, label: 'Dashboard' },
-      { icon: TrendingUp, label: 'Analytics', active: true },
-      { icon: MessageSquare, label: 'Social Posts' },
-      { icon: Share2, label: 'Sharing' },
+      { icon: ArrowUpCircle, label: 'Launchpad' },
+      { icon: LayoutDashboard, label: 'Dashboard' },
+      { icon: MessageCircle, label: 'Conversations' },
+      { icon: Calendar, label: 'Calendars' },
+      { icon: User, label: 'Contacts' },
+      { icon: TrendingUp, label: 'Opportunities' },
+      { icon: CreditCard, label: 'Payments' },
     ],
   },
   {
     items: [
-      { icon: FileText, label: 'Reports' },
-      { icon: Bell, label: 'Alerts' },
-      { icon: Users, label: 'Team' },
-      { icon: Settings, label: 'Settings' },
+      { icon: Send, label: 'Marketing', active: true },
+      { icon: RefreshCw, label: 'Automation' },
+      { icon: Globe, label: 'Sites' },
+      { icon: Star, label: 'Reputation' },
+      { icon: TrendingUp, label: 'Reporting' },
+      { icon: Grid3x3, label: 'App marketplace' },
+      { icon: Tablet, label: 'Mobile app' },
     ],
   },
 ]
 
-const SECTION_TABS = ['Overview', 'Engagement', 'Audience', 'Performance']
-const SUB_TABS = ['Today', 'This week', 'This month', 'Custom range']
+const SECTION_TABS = ['Social planner', 'Emails', 'Snippets', 'Countdown timer', 'Brand boards', 'Ad manager']
+const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening', 'Settings']
 const BODY_TABS = ['Summary', 'By platform', 'By content type', 'Trends']
 
 export default function Demo_MainNav_Tabbed_VerticalTabs() {
-  const [activeSubTab, setActiveSubTab] = useState('Today')
+  const [activeSubTab, setActiveSubTab] = useState('Social listening')
   const [activeBodyTab, setActiveBodyTab] = useState('Summary')
 
   return (
@@ -39,10 +46,10 @@ export default function Demo_MainNav_Tabbed_VerticalTabs() {
       sidebarProps={{ navSections: NAV_SECTIONS }}
       topbar="tabbed"
       topbarProps={{
-        title: 'Social Listening',
+        title: 'Marketing',
         sectionTabs: SECTION_TABS,
-        activeSection: 'Analytics',
-        subLabel: 'Engagement',
+        activeSection: 'Social planner',
+        subLabel: 'Social planner',
         subTabs: SUB_TABS,
         activeSubTab,
         onSubTabChange: setActiveSubTab,
@@ -57,7 +64,7 @@ export default function Demo_MainNav_Tabbed_VerticalTabs() {
         <div className="mb-5">
           <h1 className="text-[16px] font-semibold text-[#101828]">{activeBodyTab}</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
-            Viewing {activeSubTab.toLowerCase()} engagement metrics
+            Marketing dashboard with {activeBodyTab.toLowerCase()} view and {activeSubTab.toLowerCase()} filtering
           </p>
         </div>
         <PlaceholderContent activeTab={activeBodyTab} />
