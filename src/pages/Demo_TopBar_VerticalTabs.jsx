@@ -1,18 +1,54 @@
 import { useState } from 'react'
+import {
+  Building2, Calendar, Users, Workflow,
+  Phone, Mail, CreditCard,
+  LayoutList, Code2, Award, Image, Link2,
+} from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
 
 const TABS = ['General', 'Billing', 'Security', 'Integrations', 'API Keys']
+
+const SECTIONS = [
+  {
+    label: 'My Business',
+    items: [
+      { icon: Building2, label: 'Business profile' },
+      { icon: Calendar, label: 'Calendars' },
+      { icon: Users, label: 'My staff' },
+      { icon: Workflow, label: 'Pipelines' },
+    ],
+  },
+  {
+    label: 'Business Services',
+    items: [
+      { icon: Mail, label: 'Email services' },
+      { icon: Phone, label: 'Phone System', active: true },
+      { icon: CreditCard, label: 'Payments' },
+    ],
+  },
+  {
+    label: 'Other Settings',
+    items: [
+      { icon: LayoutList, label: 'Custom fields' },
+      { icon: Code2, label: 'Custom values' },
+      { icon: Award, label: 'Memberships' },
+      { icon: Image, label: 'Media' },
+      { icon: Link2, label: 'URL redirects' },
+    ],
+  },
+]
 
 export default function Demo_TopBar_VerticalTabs() {
   const [activeTab, setActiveTab] = useState('General')
 
   return (
     <AppShell
-      sidebar={null}
+      sidebar="settings"
+      sidebarProps={{ sections: SECTIONS, onBack: () => {} }}
       topbar="simple"
       topbarProps={{
-        title: 'Settings',
+        title: 'Phone System',
       }}
       verticalTabs={{
         tabs: TABS,

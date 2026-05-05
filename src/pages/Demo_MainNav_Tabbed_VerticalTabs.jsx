@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   BarChart3, TrendingUp, MessageSquare, Share2,
-  Building2, Calendar, Users, Workflow,
+  Settings, FileText, Bell, Users,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
@@ -13,6 +13,14 @@ const NAV_SECTIONS = [
       { icon: TrendingUp, label: 'Analytics', active: true },
       { icon: MessageSquare, label: 'Social Posts' },
       { icon: Share2, label: 'Sharing' },
+    ],
+  },
+  {
+    items: [
+      { icon: FileText, label: 'Reports' },
+      { icon: Bell, label: 'Alerts' },
+      { icon: Users, label: 'Team' },
+      { icon: Settings, label: 'Settings' },
     ],
   },
 ]
