@@ -5,6 +5,7 @@ import Demo_MainNav_Simple from './pages/Demo_MainNav_Simple'
 import Demo_Level2 from './pages/Demo_Level2'
 import Demo_TopBar_VerticalTabs from './pages/Demo_TopBar_VerticalTabs'
 import Demo_MainNav_Tabbed_VerticalTabs from './pages/Demo_MainNav_Tabbed_VerticalTabs'
+import Demo_Settings_VerticalTabs_BackToolbar from './pages/Demo_Settings_VerticalTabs_BackToolbar'
 
 const DEMOS = [
   {
@@ -42,6 +43,12 @@ const DEMOS = [
     label: 'Main nav + Tabbed + Vertical tabs',
     description: 'Two-level topbar with body-level tab navigation',
     tag: 'sidebar: main-nav · topbar: tabbed · vertical-tabs · canvas: level 1',
+  },
+  {
+    path: '/demo-settings-vertical-tabs-back-toolbar',
+    label: 'Settings + Vertical tabs + Back toolbar',
+    description: 'Settings page with sub-toolbar showing current tab',
+    tag: 'sidebar: settings · topbar: simple · vertical-tabs · canvas: level 2',
   },
 ]
 
@@ -89,6 +96,7 @@ export default function App() {
         <Route path="/demo-level2" element={<Demo_Level2 />} />
         <Route path="/demo-topbar-vertical-tabs" element={<Demo_TopBar_VerticalTabs />} />
         <Route path="/demo-main-nav-tabbed-vertical-tabs" element={<Demo_MainNav_Tabbed_VerticalTabs />} />
+        <Route path="/demo-settings-vertical-tabs-back-toolbar" element={<Demo_Settings_VerticalTabs_BackToolbar />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

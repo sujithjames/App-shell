@@ -1,5 +1,6 @@
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
+import BackToolbar from './BackToolbar'
 import VerticalTabs from './VerticalTabs'
 
 /**
@@ -27,17 +28,21 @@ export default function AppShell({
   sidebarProps = {},
   topbar = 'tabbed',
   topbarProps = {},
+  backToolbar,
   verticalTabs,
   children,
 }) {
   return (
     <div className="flex h-screen overflow-hidden bg-[#F9FAFB]">
       {sidebar && <Sidebar variant={sidebar} {...sidebarProps} />}
-      {verticalTabs && <VerticalTabs {...verticalTabs} />}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <TopBar variant={topbar} {...topbarProps} />
-        <main className="flex-1 flex flex-col min-h-0">
-          {children}
+        {backToolbar && <BackToolbar {...backToolbar} />}
+        <main className="flex-1 flex min-h-0">
+          {verticalTabs && <VerticalTabs {...verticalTabs} />}
+          <div className="flex-1 flex flex-col min-h-0">
+            {children}
+          </div>
         </main>
       </div>
     </div>
