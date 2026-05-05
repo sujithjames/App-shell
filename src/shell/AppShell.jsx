@@ -1,5 +1,6 @@
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
+import VerticalTabs from './VerticalTabs'
 
 /**
  * AppShell — composes Sidebar + TopBar + content area.
@@ -7,10 +8,11 @@ import TopBar from './TopBar'
  * Usage:
  *
  *   <AppShell
- *     sidebar="main-nav"        or "settings"
+ *     sidebar="main-nav"        or "settings" or null (for vertical-tabs layout)
  *     sidebarProps={{ ... }}    see Sidebar.jsx for full prop reference
  *     topbar="tabbed"           or "simple"
  *     topbarProps={{ ... }}     see TopBar.jsx for full prop reference
+ *     verticalTabs={{ tabs: [...], activeTab: '', onTabChange: () => {} }}
  *   >
  *     <Canvas level={1}>
  *       page content here
@@ -25,11 +27,13 @@ export default function AppShell({
   sidebarProps = {},
   topbar = 'tabbed',
   topbarProps = {},
+  verticalTabs,
   children,
 }) {
   return (
     <div className="flex h-screen overflow-hidden bg-[#F9FAFB]">
-      <Sidebar variant={sidebar} {...sidebarProps} />
+      {sidebar && <Sidebar variant={sidebar} {...sidebarProps} />}
+      {verticalTabs && <VerticalTabs {...verticalTabs} />}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <TopBar variant={topbar} {...topbarProps} />
         <main className="flex-1 flex flex-col min-h-0">
