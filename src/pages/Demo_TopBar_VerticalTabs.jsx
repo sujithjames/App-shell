@@ -7,7 +7,7 @@ import {
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
 
-const TABS = ['General', 'Billing', 'Security', 'Integrations', 'API Keys']
+const TABS = ['General', 'Billing', 'Security', 'Integrations', 'API keys']
 
 const SECTIONS = [
   {
@@ -23,7 +23,7 @@ const SECTIONS = [
     label: 'Business Services',
     items: [
       { icon: Mail, label: 'Email services' },
-      { icon: Phone, label: 'Phone System', active: true },
+      { icon: Phone, label: 'Phone system', active: true },
       { icon: CreditCard, label: 'Payments' },
     ],
   },
@@ -48,7 +48,7 @@ export default function Demo_TopBar_VerticalTabs() {
       sidebarProps={{ sections: SECTIONS, onBack: () => {} }}
       topbar="simple"
       topbarProps={{
-        title: 'Phone System',
+        title: 'Phone system',
       }}
       verticalTabs={{
         tabs: TABS,

@@ -21,7 +21,7 @@ const SECTIONS = [
     label: 'Business Services',
     items: [
       { icon: Mail, label: 'Email services' },
-      { icon: Phone, label: 'Phone System', active: true },
+      { icon: Phone, label: 'Phone system', active: true },
       { icon: CreditCard, label: 'Payments' },
     ],
   },
@@ -49,7 +49,7 @@ export default function Demo_Settings_Tabbed() {
       sidebarProps={{ sections: SECTIONS, onBack: () => {} }}
       topbar="tabbed"
       topbarProps={{
-        title: 'Phone System',
+        title: 'Phone system',
         sectionTabs: SECTION_TABS,
         activeSection: 'Messaging',
         subLabel: 'Messaging',
@@ -60,7 +60,7 @@ export default function Demo_Settings_Tabbed() {
     >
       <Canvas level={1}>
         <div className="mb-5">
-          <h1 className="text-[16px] font-semibold text-[#101828]">Messaging Limits</h1>
+          <h1 className="text-[16px] font-semibold text-[#101828]">Messaging limits</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
             Track your daily limit and usage. Messages pause when you hit the cap.
           </p>

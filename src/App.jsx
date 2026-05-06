@@ -11,13 +11,13 @@ const DEMOS = [
   {
     path: '/demo-main-nav-tabbed',
     label: 'Main nav + Tabbed',
-    description: 'Social Listening pattern',
+    description: 'Social listening pattern',
     tag: 'sidebar: main-nav · topbar: tabbed · canvas: level 1',
   },
   {
     path: '/demo-settings-tabbed',
     label: 'Settings + Tabbed',
-    description: 'Phone System / Messaging Limits pattern',
+    description: 'Phone system / Messaging limits pattern',
     tag: 'sidebar: settings · topbar: tabbed · canvas: level 1',
   },
   {
@@ -29,7 +29,7 @@ const DEMOS = [
   {
     path: '/demo-level2',
     label: 'Level 2 canvas',
-    description: 'Topic Detail / drill-down pattern',
+    description: 'Topic detail / drill-down pattern',
     tag: 'sidebar: main-nav · topbar: tabbed · canvas: level 2',
   },
   {

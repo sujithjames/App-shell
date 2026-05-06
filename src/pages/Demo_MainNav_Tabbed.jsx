@@ -55,7 +55,7 @@ export default function Demo_MainNav_Tabbed() {
     >
       <Canvas level={1}>
         <div className="mb-5">
-          <h1 className="text-[16px] font-semibold text-[#101828]">Social Listening</h1>
+          <h1 className="text-[16px] font-semibold text-[#101828]">Social listening</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
             Monitor brand mentions and trends across social platforms in real time.
           </p>
