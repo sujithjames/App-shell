@@ -1,26 +1,158 @@
-import { Sparkles, Megaphone, Bell, HelpCircle } from 'lucide-react'
+import { useRef, useState, useLayoutEffect, useEffect } from 'react'
+import { Sparkles, Megaphone, Bell, HelpCircle, ChevronDown } from 'lucide-react'
 
 function GlobalIcons() {
   return (
-    <div className="flex items-center gap-2 shrink-0">
-      <div className="size-8 rounded-full bg-[#6938EF] flex items-center justify-center cursor-pointer">
-        <Sparkles size={14} className="text-white" />
+    <div className="flex items-center gap-0.5 shrink-0">
+      <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <Sparkles size={16} />
+      </button>
+      <div className="relative">
+        <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+          <Megaphone size={16} />
+        </button>
+        <span className="absolute top-0.5 right-0.5 size-2 rounded-full bg-red-500 ring-[1.5px] ring-white pointer-events-none" />
       </div>
-      <div className="relative size-8 cursor-pointer">
-        <div className="size-8 rounded-full bg-[#209681] flex items-center justify-center">
-          <Megaphone size={14} className="text-white" />
+      <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <Bell size={16} />
+      </button>
+      <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <HelpCircle size={16} />
+      </button>
+      <button className="size-8 rounded-full bg-[#344054] flex items-center justify-center hover:bg-[#1D2939] transition-colors ml-1">
+        <span className="text-white text-[12px] font-semibold leading-none">SS</span>
+      </button>
+    </div>
+  )
+}
+
+function OverflowTabRow({ tabs, activeTab, onTabChange, textSize, indicatorBottom }) {
+  const wrapperRef = useRef(null)
+  const [visibleCount, setVisibleCount] = useState(tabs.length)
+  const [open, setOpen] = useState(false)
+
+  useLayoutEffect(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+
+    function measure() {
+      const ghosts = Array.from(wrapper.querySelectorAll('[data-ghost-tab]'))
+      const available = wrapper.offsetWidth
+
+      // Reserve enough width for the More button. When the active tab is in overflow
+      // the button shows the active tab name instead of "More", so it can be much wider
+      // than a fixed constant. Measure the active tab ghost to get the true required width.
+      const activeIdx = tabs.indexOf(activeTab)
+      const activeGhostW = (activeIdx >= 0 && ghosts[activeIdx]) ? ghosts[activeIdx].offsetWidth : 0
+      // More button layout: px-2 (16px) + text + gap-1 (4px) + ChevronDown (~16px)
+      // activeGhostW already includes px-2 on the ghost span, so extra needed is ~24px
+      const MORE_W = Math.max(70, activeGhostW + 28)
+
+      let used = 0
+      let count = ghosts.length
+
+      for (let i = 0; i < ghosts.length; i++) {
+        const w = ghosts[i].offsetWidth + 4
+        const willNeedMore = i < ghosts.length - 1
+        if (used + w + (willNeedMore ? MORE_W : 0) > available) {
+          count = i
+          break
+        }
+        used += w
+      }
+      setVisibleCount(count)
+    }
+
+    const ro = new ResizeObserver(measure)
+    ro.observe(wrapper)
+    measure()
+    return () => ro.disconnect()
+  }, [tabs.join('|'), activeTab])
+
+  useEffect(() => {
+    if (!open) return
+    function handleOutside(e) {
+      if (!e.target.closest('[data-more-dropdown]')) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleOutside)
+    return () => document.removeEventListener('mousedown', handleOutside)
+  }, [open])
+
+  const visible = tabs.slice(0, visibleCount)
+  const overflow = tabs.slice(visibleCount)
+  const activeInOverflow = overflow.includes(activeTab)
+
+  return (
+    <div ref={wrapperRef} className="flex self-stretch items-center gap-1 min-w-0 flex-1 relative">
+
+      {/* Ghost row — invisible, used only for width measurement */}
+      <div className="absolute top-0 left-0 flex items-center gap-1 opacity-0 pointer-events-none" aria-hidden="true">
+        {tabs.map(tab => (
+          <span key={tab} data-ghost-tab className={`px-2 ${textSize} font-medium whitespace-nowrap`}>
+            {tab}
+          </span>
+        ))}
+      </div>
+
+      {/* Visible tabs */}
+      {visible.map(tab => {
+        const isActive = tab === activeTab
+        return (
+          <button
+            key={tab}
+            onClick={() => onTabChange?.(tab)}
+            className={`relative flex items-center justify-center self-stretch px-2 whitespace-nowrap transition-colors shrink-0 ${
+              isActive
+                ? 'font-semibold text-[#155EEF]'
+                : 'font-medium text-[#667085] hover:text-[#344054]'
+            }`}
+          >
+            <span className={`${textSize} translate-y-px`}>{tab}</span>
+            {isActive && (
+              <span className={`absolute ${indicatorBottom} left-0 right-0 h-[2px] bg-[#155EEF] rounded-full`} />
+            )}
+          </button>
+        )
+      })}
+
+      {/* More dropdown */}
+      {overflow.length > 0 && (
+        <div data-more-dropdown className="relative shrink-0 self-stretch flex items-center">
+          <button
+            onClick={() => setOpen(o => !o)}
+            className={`relative flex items-center gap-1 self-stretch px-2 whitespace-nowrap transition-colors ${
+              activeInOverflow
+                ? 'font-semibold text-[#155EEF]'
+                : 'font-medium text-[#667085] hover:text-[#344054]'
+            }`}
+          >
+            <span className={`${textSize} translate-y-px`}>
+              {activeInOverflow ? activeTab : 'More'}
+            </span>
+            <ChevronDown size={11} strokeWidth={2.5} className="translate-y-px" />
+            {activeInOverflow && (
+              <span className={`absolute ${indicatorBottom} left-0 right-0 h-[2px] bg-[#155EEF] rounded-full`} />
+            )}
+          </button>
+          {open && (
+            <div className="absolute top-full left-0 mt-1 bg-white border border-[#EAECF0] rounded-lg shadow-lg py-1 z-50 min-w-[160px]">
+              {overflow.map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => { onTabChange?.(tab); setOpen(false) }}
+                  className={`w-full text-left px-3 py-2 text-[14px] transition-colors ${
+                    tab === activeTab
+                      ? 'text-[#155EEF] font-semibold bg-[#EEF4FF]'
+                      : 'text-[#344054] font-medium hover:bg-[#F9FAFB]'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-        <span className="absolute top-0 right-0 size-2 rounded-full bg-red-500 border border-white" />
-      </div>
-      <div className="size-8 rounded-full bg-[#FF681E] flex items-center justify-center cursor-pointer">
-        <Bell size={14} className="text-white" />
-      </div>
-      <div className="size-8 rounded-full bg-[#008AEF] flex items-center justify-center cursor-pointer">
-        <HelpCircle size={14} className="text-white" />
-      </div>
-      <div className="size-8 rounded-full bg-[#65B5BC] flex items-center justify-center cursor-pointer">
-        <span className="text-white text-[14px] font-medium leading-none">SS</span>
-      </div>
+      )}
     </div>
   )
 }
@@ -28,31 +160,19 @@ function GlobalIcons() {
 /**
  * TopBar — two variants:
  *
- * variant="tabbed"  (Social Listening / Phone System pattern)
- *   Row 1: title + section tabs + global icons
- *   Row 2: subLabel + sub-tabs + optional action buttons
+ * variant="tabbed"
+ *   Row 1: title + section tabs (with overflow) + global icons
+ *   Row 2: subLabel + sub-tabs (with overflow) + optional action buttons
  *
- *   Props:
- *     title          string           e.g. "Phone System"
- *     sectionTabs    string[]         e.g. ['Voice', 'Messaging', 'Trust center']
- *     activeSection  string           which section tab is highlighted
- *     subLabel       string           e.g. "Messaging" — shown before sub-tabs in row 2
- *     subTabs        string[]         sub-tab labels
- *     activeSubTab   string           which sub-tab is highlighted
- *     onSubTabChange (tab) => void    called when a sub-tab is clicked
- *     actions        ReactNode        optional buttons for the right side of row 2
- *
- * variant="simple"  (single-row products)
- *   Row 1 only: title + global icons. No tabs.
- *
- *   Props:
- *     title          string
+ * variant="simple"
+ *   Single row: title + global icons. No tabs.
  */
 export default function TopBar({
   variant = 'tabbed',
   title = 'App Title',
   sectionTabs = [],
   activeSection = '',
+  onSectionTabChange,
   subLabel = '',
   subTabs = [],
   activeSubTab = '',
@@ -77,60 +197,37 @@ export default function TopBar({
     <header className="bg-white w-full flex flex-col shrink-0">
 
       {/* Row 1: title + section tabs + global icons */}
-      <div className="flex items-center gap-12 px-4 py-1 border-b border-[#EAECF0] shadow-[0px_1px_1px_rgba(16,24,40,0.05)]">
+      <div className="flex items-center gap-4 px-4 py-1 border-b border-[#EAECF0] shadow-[0px_1px_1px_rgba(16,24,40,0.05)]">
         <div className="flex flex-1 self-stretch items-center gap-3 min-w-0">
           <span className="text-[20px] font-semibold text-[#101828] leading-[30px] whitespace-nowrap shrink-0">
             {title}
           </span>
-          <div className="flex self-stretch items-center gap-1">
-            {sectionTabs.map(tab => (
-              <div key={tab} className="relative flex items-center justify-center px-2 self-stretch shrink-0">
-                <span className={`text-[16px] whitespace-nowrap translate-y-px ${
-                  tab === activeSection
-                    ? 'font-semibold text-[#155EEF]'
-                    : 'font-medium text-[#667085]'
-                }`}>
-                  {tab}
-                </span>
-                {tab === activeSection && (
-                  <span className="absolute bottom-[-4px] left-0 right-0 h-[2px] bg-[#155EEF] rounded-full" />
-                )}
-              </div>
-            ))}
-          </div>
+          <OverflowTabRow
+            tabs={sectionTabs}
+            activeTab={activeSection}
+            onTabChange={onSectionTabChange}
+            textSize="text-[16px]"
+            indicatorBottom="bottom-[-4px]"
+          />
         </div>
         <GlobalIcons />
       </div>
 
       {/* Row 2: subLabel + sub-tabs + optional actions */}
-      <div className="flex items-center gap-12 px-4 border-b border-[#D0D5DD] min-h-[44px]">
+      <div className="flex items-center gap-4 px-4 border-b border-[#D0D5DD] min-h-[44px]">
         <div className="flex flex-1 self-stretch items-center gap-2 min-w-0">
           {subLabel && (
             <span className="text-[16px] font-semibold text-[#101828] leading-6 whitespace-nowrap shrink-0">
               {subLabel}
             </span>
           )}
-          <div className="flex self-stretch items-center gap-1 overflow-x-auto no-scrollbar">
-            {subTabs.map(tab => {
-              const isActive = tab === activeSubTab
-              return (
-                <button
-                  key={tab}
-                  onClick={() => onSubTabChange?.(tab)}
-                  className={`relative flex items-center justify-center self-stretch px-2 whitespace-nowrap transition-colors shrink-0 ${
-                    isActive
-                      ? 'font-semibold text-[#155EEF]'
-                      : 'font-medium text-[#667085] hover:text-[#344054]'
-                  }`}
-                >
-                  <span className="text-[15px] translate-y-px">{tab}</span>
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#155EEF] rounded-full" />
-                  )}
-                </button>
-              )
-            })}
-          </div>
+          <OverflowTabRow
+            tabs={subTabs}
+            activeTab={activeSubTab}
+            onTabChange={onSubTabChange}
+            textSize="text-[15px]"
+            indicatorBottom="bottom-0"
+          />
         </div>
         {actions && (
           <div className="flex items-center gap-2 shrink-0 py-1.5">

@@ -39,6 +39,15 @@ const SECTIONS = [
   },
 ]
 
+const ABBREVS = ['API', 'URL', 'ID', 'SMS', 'MFA', 'UI', 'UX']
+function lowerLabel(str) {
+  let result = str.toLowerCase()
+  for (const abbr of ABBREVS) {
+    result = result.replace(new RegExp(`\\b${abbr.toLowerCase()}\\b`, 'g'), abbr)
+  }
+  return result
+}
+
 export default function Demo_TopBar_VerticalTabs() {
   const [activeTab, setActiveTab] = useState('General')
 
@@ -60,7 +69,7 @@ export default function Demo_TopBar_VerticalTabs() {
         <div className="mb-5">
           <h1 className="text-[16px] font-semibold text-[#101828]">{activeTab}</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
-            Manage your {activeTab.toLowerCase()} settings and preferences
+            Manage your {lowerLabel(activeTab)} settings and preferences.
           </p>
         </div>
         <PlaceholderContent activeTab={activeTab} />

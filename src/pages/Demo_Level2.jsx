@@ -4,6 +4,7 @@ import {
   ArrowUpCircle, LayoutDashboard, MessageCircle, Calendar,
   User, CreditCard, Send, RefreshCw, Globe, Star,
   TrendingUp, Grid3x3, Tablet, RefreshCw as Refresh, Share2, Download,
+  Settings, Plus,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
@@ -34,12 +35,13 @@ const NAV_SECTIONS = [
 ]
 
 const SECTION_TABS = ['Social planner', 'Emails', 'Snippets', 'Countdown timer', 'Brand boards', 'Ad manager']
-const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening', 'Settings']
+const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening']
 
 export default function Demo_Level2() {
   const navigate = useNavigate()
+  const [activeSubTab, setActiveSubTab] = useState('Social listening')
 
-  const toolbarRight = (
+  const canvasToolbar = (
     <div className="flex items-center gap-1.5">
       <button className="w-7 h-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
         <Refresh size={13} />
@@ -49,6 +51,25 @@ export default function Demo_Level2() {
       </button>
       <button className="w-7 h-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
         <Download size={13} />
+      </button>
+    </div>
+  )
+
+  const topbarActions = (
+    <div className="flex items-center gap-1.5">
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <RefreshCw size={13} />
+      </button>
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <Settings size={13} />
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-medium text-[#344054] border border-[#D0D5DD] rounded-lg hover:bg-[#F9FAFB] transition-colors">
+        <Plus size={12} />
+        Socials
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-semibold text-white bg-[#155EEF] rounded-lg hover:bg-[#1249C0] transition-colors">
+        <Plus size={12} />
+        New post
       </button>
     </div>
   )
@@ -64,14 +85,16 @@ export default function Demo_Level2() {
         activeSection: 'Social planner',
         subLabel: 'Social planner',
         subTabs: SUB_TABS,
-        activeSubTab: 'Social listening',
+        activeSubTab,
+        onSubTabChange: setActiveSubTab,
+        actions: topbarActions,
       }}
     >
       <Canvas
         level={2}
         onBack={() => navigate('/demo-main-nav-tabbed')}
         title='"HighLevel"'
-        toolbar={toolbarRight}
+        toolbar={canvasToolbar}
       >
         <PlaceholderDetailContent />
       </Canvas>
@@ -85,13 +108,13 @@ function PlaceholderDetailContent() {
       <div className="grid grid-cols-5 gap-3">
         {['Total mentions', 'Positive', 'Neutral', 'Negative', 'Net sentiment'].map(label => (
           <div key={label} className="border border-[#EAECF0] rounded-lg p-4">
-            <p className="text-[11px] font-medium text-[#667085] mb-1">{label}</p>
+            <p className="text-[12px] font-medium text-[#667085] mb-1">{label}</p>
             <div className="h-6 w-14 bg-[#F2F4F7] rounded" />
           </div>
         ))}
       </div>
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-[#98A2B3] mb-4">Sentiment analysis</p>
+        <p className="text-[12px] font-semibold uppercase tracking-wider text-[#98A2B3] mb-4">Sentiment analysis</p>
         <div className="grid grid-cols-3 gap-4">
           <div className="border border-[#EAECF0] rounded-lg p-4 h-48 flex items-center justify-center">
             <span className="text-[13px] text-[#98A2B3]">Sentiment donut</span>
@@ -102,7 +125,7 @@ function PlaceholderDetailContent() {
         </div>
       </div>
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-[#98A2B3] mb-4">Platform intelligence</p>
+        <p className="text-[12px] font-semibold uppercase tracking-wider text-[#98A2B3] mb-4">Platform intelligence</p>
         <div className="grid grid-cols-2 gap-4">
           {['Mentions by platform', 'Platform trends over time'].map(label => (
             <div key={label} className="border border-[#EAECF0] rounded-lg p-4 h-48 flex items-center justify-center">

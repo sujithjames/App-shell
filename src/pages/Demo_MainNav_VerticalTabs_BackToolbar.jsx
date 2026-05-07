@@ -1,70 +1,54 @@
 import { useState } from 'react'
 import {
-  Building2, Calendar, Users, Workflow,
-  Phone, Mail, CreditCard,
-  LayoutList, Code2, Award, Image, Link2,
+  ArrowUpCircle, LayoutDashboard, MessageCircle, Calendar,
+  User, CreditCard, Send, RefreshCw, Globe, Star,
+  TrendingUp, Grid3x3, Tablet,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
 
-const TABS = ['General', 'Billing', 'Security', 'Integrations', 'API keys']
-
-const SECTIONS = [
+const NAV_SECTIONS = [
   {
-    label: 'My Business',
     items: [
-      { icon: Building2, label: 'Business profile' },
+      { icon: ArrowUpCircle, label: 'Launchpad' },
+      { icon: LayoutDashboard, label: 'Dashboard' },
+      { icon: MessageCircle, label: 'Conversations' },
       { icon: Calendar, label: 'Calendars' },
-      { icon: Users, label: 'My staff' },
-      { icon: Workflow, label: 'Pipelines' },
-    ],
-  },
-  {
-    label: 'Business Services',
-    items: [
-      { icon: Mail, label: 'Email services' },
-      { icon: Phone, label: 'Phone system', active: true },
+      { icon: User, label: 'Contacts', active: true },
+      { icon: TrendingUp, label: 'Opportunities' },
       { icon: CreditCard, label: 'Payments' },
     ],
   },
   {
-    label: 'Other Settings',
     items: [
-      { icon: LayoutList, label: 'Custom fields' },
-      { icon: Code2, label: 'Custom values' },
-      { icon: Award, label: 'Memberships' },
-      { icon: Image, label: 'Media' },
-      { icon: Link2, label: 'URL redirects' },
+      { icon: Send, label: 'Marketing' },
+      { icon: RefreshCw, label: 'Automation' },
+      { icon: Globe, label: 'Sites' },
+      { icon: Star, label: 'Reputation' },
+      { icon: TrendingUp, label: 'Reporting' },
+      { icon: Grid3x3, label: 'App marketplace' },
+      { icon: Tablet, label: 'Mobile app' },
     ],
   },
 ]
 
-const ABBREVS = ['API', 'URL', 'ID', 'SMS', 'MFA', 'UI', 'UX']
-function lowerLabel(str) {
-  let result = str.toLowerCase()
-  for (const abbr of ABBREVS) {
-    result = result.replace(new RegExp(`\\b${abbr.toLowerCase()}\\b`, 'g'), abbr)
-  }
-  return result
-}
+const VERTICAL_TABS = ['Overview', 'Activity', 'Notes', 'Files', 'Integrations']
 
-export default function Demo_Settings_VerticalTabs_BackToolbar() {
-  const [activeTab, setActiveTab] = useState('General')
+export default function Demo_MainNav_VerticalTabs_BackToolbar() {
+  const [activeTab, setActiveTab] = useState('Overview')
 
   return (
     <AppShell
-      sidebar="settings"
-      sidebarProps={{ sections: SECTIONS, onBack: () => {} }}
+      sidebar="main-nav"
+      sidebarProps={{ navSections: NAV_SECTIONS }}
       topbar="simple"
-      topbarProps={{
-        title: 'Phone system',
-      }}
+      topbarProps={{ title: 'Contacts' }}
       backToolbar={{
-        onBack: () => setActiveTab('General'),
-        label: 'Phone system',
+        onBack: () => setActiveTab('Overview'),
+        label: 'Sarah Johnson',
       }}
       verticalTabs={{
-        tabs: TABS,
+        tabs: VERTICAL_TABS,
         activeTab,
         onTabChange: setActiveTab,
       }}
@@ -73,7 +57,7 @@ export default function Demo_Settings_VerticalTabs_BackToolbar() {
         <div className="mb-5">
           <h1 className="text-[16px] font-semibold text-[#101828]">{activeTab}</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
-            Manage your {lowerLabel(activeTab)} settings and preferences.
+            Contact details and {activeTab.toLowerCase()} information for Sarah Johnson.
           </p>
         </div>
         <PlaceholderContent activeTab={activeTab} />
@@ -89,7 +73,7 @@ function PlaceholderContent({ activeTab }) {
         <span className="text-[13px] text-[#98A2B3]">{activeTab} content</span>
       </div>
       <div className="grid grid-cols-3 gap-4">
-        {['Setting 1', 'Setting 2', 'Setting 3'].map(label => (
+        {['Contact info', 'Tags', 'Source'].map(label => (
           <div key={label} className="border border-[#EAECF0] rounded-lg p-4">
             <p className="text-[12px] font-medium text-[#667085] mb-1">{label}</p>
             <div className="h-5 w-16 bg-[#F2F4F7] rounded" />
@@ -97,7 +81,7 @@ function PlaceholderContent({ activeTab }) {
         ))}
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {['Details', 'Advanced'].map(label => (
+        {['Recent conversations', 'Assigned workflows'].map(label => (
           <div key={label} className="border border-[#EAECF0] rounded-lg p-4 h-36 flex items-center justify-center">
             <span className="text-[13px] text-[#98A2B3]">{label}</span>
           </div>

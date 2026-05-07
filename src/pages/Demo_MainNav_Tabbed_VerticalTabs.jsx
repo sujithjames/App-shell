@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {
   ArrowUpCircle, LayoutDashboard, MessageCircle, Calendar,
   User, CreditCard, Send, RefreshCw, Globe, Star,
-  TrendingUp, Grid3x3, Tablet,
+  TrendingUp, Grid3x3, Tablet, Settings, Plus,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
@@ -33,12 +33,31 @@ const NAV_SECTIONS = [
 ]
 
 const SECTION_TABS = ['Social planner', 'Emails', 'Snippets', 'Countdown timer', 'Brand boards', 'Ad manager']
-const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening', 'Settings']
+const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening']
 const BODY_TABS = ['Summary', 'By platform', 'By content type', 'Trends']
 
 export default function Demo_MainNav_Tabbed_VerticalTabs() {
   const [activeSubTab, setActiveSubTab] = useState('Social listening')
   const [activeBodyTab, setActiveBodyTab] = useState('Summary')
+
+  const actions = (
+    <div className="flex items-center gap-1.5">
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <RefreshCw size={13} />
+      </button>
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <Settings size={13} />
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-medium text-[#344054] border border-[#D0D5DD] rounded-lg hover:bg-[#F9FAFB] transition-colors">
+        <Plus size={12} />
+        Socials
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-semibold text-white bg-[#155EEF] rounded-lg hover:bg-[#1249C0] transition-colors">
+        <Plus size={12} />
+        New post
+      </button>
+    </div>
+  )
 
   return (
     <AppShell
@@ -53,6 +72,7 @@ export default function Demo_MainNav_Tabbed_VerticalTabs() {
         subTabs: SUB_TABS,
         activeSubTab,
         onSubTabChange: setActiveSubTab,
+        actions,
       }}
       verticalTabs={{
         tabs: BODY_TABS,
@@ -64,7 +84,7 @@ export default function Demo_MainNav_Tabbed_VerticalTabs() {
         <div className="mb-5">
           <h1 className="text-[16px] font-semibold text-[#101828]">{activeBodyTab}</h1>
           <p className="text-[13px] text-[#667085] mt-0.5">
-            Marketing dashboard with {activeBodyTab.toLowerCase()} view and {activeSubTab.toLowerCase()} filtering
+            Marketing dashboard with {activeBodyTab.toLowerCase()} view and {activeSubTab.toLowerCase()} filtering.
           </p>
         </div>
         <PlaceholderContent activeTab={activeBodyTab} />

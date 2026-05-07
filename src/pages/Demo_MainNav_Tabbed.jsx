@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {
   ArrowUpCircle, LayoutDashboard, MessageCircle, Calendar,
   User, CreditCard, Send, RefreshCw, Globe, Star,
-  TrendingUp, Grid3x3, Tablet,
+  TrendingUp, Grid3x3, Tablet, Settings, Plus,
 } from 'lucide-react'
 import AppShell from '../shell/AppShell'
 import Canvas from '../shell/Canvas'
@@ -33,10 +33,29 @@ const NAV_SECTIONS = [
 ]
 
 const SECTION_TABS = ['Social planner', 'Emails', 'Snippets', 'Countdown timer', 'Brand boards', 'Ad manager']
-const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening', 'Settings']
+const SUB_TABS = ['Planner', 'Content', 'Comments', 'Statistics', 'Social listening']
 
 export default function Demo_MainNav_Tabbed() {
   const [activeSubTab, setActiveSubTab] = useState('Social listening')
+
+  const actions = (
+    <div className="flex items-center gap-1.5">
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <RefreshCw size={13} />
+      </button>
+      <button className="size-7 flex items-center justify-center rounded-md border border-[#EAECF0] text-[#667085] hover:bg-[#F9FAFB] transition-colors">
+        <Settings size={13} />
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-medium text-[#344054] border border-[#D0D5DD] rounded-lg hover:bg-[#F9FAFB] transition-colors">
+        <Plus size={12} />
+        Socials
+      </button>
+      <button className="h-7 px-2.5 flex items-center gap-1 text-[13px] font-semibold text-white bg-[#155EEF] rounded-lg hover:bg-[#1249C0] transition-colors">
+        <Plus size={12} />
+        New post
+      </button>
+    </div>
+  )
 
   return (
     <AppShell
@@ -51,6 +70,7 @@ export default function Demo_MainNav_Tabbed() {
         subTabs: SUB_TABS,
         activeSubTab,
         onSubTabChange: setActiveSubTab,
+        actions,
       }}
     >
       <Canvas level={1}>
@@ -73,7 +93,7 @@ function PlaceholderContent() {
         {[['Total mentions', '182'], ['Avg sentiment', '68%'], ['Active topics', '4']].map(([label, val]) => (
           <div key={label} className="border border-[#EAECF0] rounded-lg p-4">
             <p className="text-[12px] font-medium text-[#667085] mb-1">{label}</p>
-            <p className="text-[20px] font-semibold text-[#101828]">{val}</p>
+            <p className="text-[24px] font-semibold text-[#101828]">{val}</p>
           </div>
         ))}
       </div>
