@@ -4,8 +4,23 @@ import { Sparkles, Megaphone, Bell, HelpCircle, ChevronDown } from 'lucide-react
 function GlobalIcons() {
   return (
     <div className="flex items-center gap-0.5 shrink-0">
-      <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
-        <Sparkles size={16} />
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        <defs>
+          <linearGradient id="ai-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6938EF" />
+            <stop offset="100%" stopColor="#D444F1" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <button className="group relative h-8 pl-3 pr-1.5 mr-1 flex items-center gap-1.5 rounded-full border border-[#E9D7FE] hover:border-[#6938EF] hover:shadow-[0_0_18px_-3px_rgba(105,56,239,0.45)] hover:scale-[1.02] transition-all overflow-hidden">
+        <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#6938EF]/15 to-transparent pointer-events-none" />
+        <Sparkles size={14} fill="url(#ai-gradient)" stroke="url(#ai-gradient)" className="relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+        <span className="relative z-10 text-[13px] font-medium bg-gradient-to-r from-[#6938EF] to-[#D444F1] bg-clip-text text-transparent">
+          Ask AI
+        </span>
+        <span className="relative z-10 px-1.5 py-0.5 rounded bg-[#F2F4F7] text-[#667085] text-[12px] font-medium leading-none">
+          ⌘K
+        </span>
       </button>
       <div className="relative">
         <button className="size-8 flex items-center justify-center rounded-full text-[#98A2B3] hover:text-[#667085] hover:bg-[#F9FAFB] transition-colors">
